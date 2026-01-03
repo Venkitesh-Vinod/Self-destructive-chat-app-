@@ -22,36 +22,33 @@ app.set('port', port);
 var server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const rooms = {}; // Stores { roomName: { ttl: seconds, validation: encryptedString } }
 
-const rooms = {}; // Stores { roomName: { ttl: seconds } }
-
-// Server-side Ticker
 setInterval(() => {
   for (const roomName in rooms) {
     if (rooms[roomName].ttl > 0) {
-      rooms[roomName].ttl -= 1; // Decrease the master timer
+      rooms[roomName].ttl -= 1;
     }
   }
 }, 1000);
 
 io.on("connection", (socket) => {
-  // Send the list of existing rooms to the new user immediately
   socket.emit("initial-room-list", rooms);
 
-  socket.on("create-room", ({ roomName, ttl }) => {
+  socket.on("create-room", ({ roomName, ttl, validation }) => {
     if (!rooms[roomName]) {
-      rooms[roomName] = { ttl: ttl };
+      // Store the validation string provided by the creator
+      rooms[roomName] = { ttl: ttl, validation: validation };
       
-      // Tell everyone a new room exists with its countdown
-      io.emit("new-room-created", { roomName, ttl });
+      io.emit("new-room-created", { roomName, ttl, validation });
 
-      // Server-side master timer to delete the room
       if (ttl > 0) {
         setTimeout(() => {
           delete rooms[roomName];
           io.emit("room-destroyed-globally", roomName);
         }, ttl * 1000);
-      } }
+      }
+    }
   });
 
   socket.on("join-room", (roomName) => {
@@ -62,15 +59,16 @@ io.on("connection", (socket) => {
     socket.leave(roomName);
   });
   
-socket.on('send-chat-message', (data) => {
-  const messageObject = {
-    room: data.room, // Keep track of which room this belongs to
-    name: data.name,
-    message: data.message,
-    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  };
-  io.to(data.room).emit("chat-message", messageObject);
-});
+  socket.on('send-chat-message', (data) => {
+    const messageObject = {
+      room: data.room,
+      name: data.name,
+      message: data.message,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      id: socket.id
+    };
+    io.to(data.room).emit("chat-message", messageObject);
+  });
 });
 /**
  * Listen on provided port, on all network interfaces.

@@ -7,6 +7,7 @@ body {
   overflow: hidden;
 }
 
+
 #app {
   display: flex;
   height: 100vh;
@@ -14,59 +15,95 @@ body {
   font-family: Arial, sans-serif;
 }
 
+
 /* --- LEFT PANEL (Sidebar) --- */
 #left-panel {
   width: 300px;
-  background: #f7f7f8;
-  border-right: 1px solid #ddd;
+  background: #20252e;
+  border-right: 1px solid #6f5e00;
   padding: 15px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background: #e3e4e5;
 }
+
 
 #left-panel h3 {
   margin: 0 0 20px 0;
   font-size:24px;
-  color:#0d96df;
+  color:#D4AF37;
 }
+
 
 #room-input {
   width:130px;
   padding: 10px;
   margin-bottom: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #D4AF37;
   border-radius: 6px;
   outline: none;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-size: 15px;
 }
+
+#room-input::placeholder {
+  color: #D4AF37;   /* A custom teal color */
+  opacity: 0.6;      /* Ensures consistent brightness across browsers */
+  font-weight: 200; /* Makes the text thinner or thicker */
+}
+
+#room-input:focus {
+    outline: 1px solid gold;
+}
+
 #ttl-input{
   padding:10px;
-  max-width:65px;
+  max-width:70px;
   margin-left:10px;
-  border: 1px solid #ddd;
+  border: 1px solid #D4AF37;
   border-radius: 6px;
   margin-bottom: 8px;
+  background-color: #020617;
+  color: #e5e7eb;
+  font-size: 15px;
+}
+
+#ttl-input::placeholder {
+  color: #D4AF37;   /* A custom teal color */
+  opacity: 0.6;      /* Ensures consistent brightness across browsers */
+  font-weight: 200; /* Makes the text thinner or thicker */
+}
+
+#ttl-input:focus {
+    outline: 1px solid gold;
 }
 
 #create-room-btn {
-  padding: 10px;
-  border: none;
-  background: #0d96df;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 55px;
+    padding: 10px;
+    border: none;
+    background: #D4AF37;
+    color: #3e3b2c;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 55px;
+    font-weight: bold;
+    font-size: 16px;
 }
 
-#create-room-btn:hover{
-  background-color: #3ab5cb;
+#create-room-btn:hover {
+  background: linear-gradient(135deg, #D4AF37, #F4D03F);
+  color: #000000;
+  transform: scale(1.05);
+  box-shadow: 10px 6px 33px rgba(212, 175, 55, 0.4);
 }
+
 
 #room-list {
   flex: 1;
   overflow-y: auto;
 }
+
 
 .room-item {
   padding: 12px;
@@ -74,49 +111,71 @@ body {
   cursor: pointer;
   margin-bottom: 5px;
   font-size: 20px;
+  color: #D4AF37;
 }
 
-.room-item:hover {
-  background: #efefef;
+.room-item:not(.active):hover {
+  background: #3e4856;
+  transform: scale(1.05);
+  border:1px solid #2a313b;
+  border-radius: 15px;
 }
 
 .room-item.active {
-  background: #b8bdc2;
-  font-weight: bold;
+    background: #453d24;
+    border:1px solid gold;
+    font-weight: 100;
 }
 
+
 .rem-time{
-background-color: #c50404;
-display: block;
-width: fit-content;
-border: 1px solid #852020;
-border-radius: 10px;
-color:#ffff00;
-margin-top: 6px;
+  background-color: #b91c1c;
+  display: block;
+  width: fit-content;
+  border: 1px solid #7f1d1d;
+  border-radius: 10px;
+  color:#fee2e2;
+  margin-top: 6px;
 }
+
 
 /* --- RIGHT PANEL (Chat Area) --- */
 #chat-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #ffffff; /* Reverted to white background */
   position: relative;
 }
+
 
 #no-chat-selected {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #888;
+  background-color:#020617 ;
+  color: #6b7280;
 }
+
 
 #active-chat-area {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.header-wrapper {
+    position: sticky;
+    top: 0;
+    background-color: #020617;
+    background-image: /* The Glow */ radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08), transparent 60%), /* The Dots */ radial-gradient(rgb(98 78 13 / 30%) 0.9px, transparent 9.9px);
+    background-size: 100% 100%, 22px 52px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    z-index: 100;
 }
 
 /* --- MESSAGES --- */
@@ -126,10 +185,21 @@ margin-top: 6px;
   flex-direction: column; 
   padding: 20px;
   overflow-y: auto;
-  gap: 10px;
-  background-color: #f9f9f9; /* Reverted to light gray chat area */
-  padding-bottom: 80px; 
+  gap: 30px;
+  background-color: #020617;
+  background-image: /* The Glow */ radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08), transparent 60%), /* The Dots */ radial-gradient(rgb(98 78 13 / 30%) 0.9px, transparent 9.9px);
+  background-size: 100% 100%, 22px 52px;
+  position: relative;
+  
+  /* background-color: #020617;
+
+  background-image: radial-gradient(#c09f36 1.5px, transparent 1px);
+  
+  This controls the distance between dots (Width Height)
+  background-size: 30px 30px;
+  padding-bottom: 80px;*/
 }
+
 
 .message {
   width:200px;
@@ -142,24 +212,28 @@ margin-top: 6px;
   flex-direction: column;
 }
 
-/* YOUR MESSAGES (Blue/Yellow) */
+
+/* YOUR MESSAGES (Blue) */
 .my-message {
-  background-color: #0d96df; /* Your blue */
-  color: #fefee5;           /* Your light yellow text */
-  align-self: flex-end;     /* Aligns bubble to the RIGHT */
+  background-color: #857108;
+  color: #e5f2ff;
+  align-self: flex-end;
 }
 
-/* OTHER MESSAGES (Gray/White) */
+
+/* OTHER MESSAGES (Dark gray) */
 .other-message {
-  background-color: #d5e9f3; /* Your gray */
-  color: #21273a;           /* Your off-white text */
-  align-self: flex-start;   /* Aligns bubble to the LEFT */
+  background-color: #34415d;
+  color: #e5e7eb;
+  align-self: flex-start;
 }
+
 
 .other-message .time {
-  color: #d5e9f3; /* A specific darker gray for the timestamp on other messages */
-  opacity: 0.8;     /* Make it fully solid if the background is light */
+  color: #9ca3af;
+  opacity: 0.85;
 }
+
 
 .name {
   font-weight: bold;
@@ -167,13 +241,15 @@ margin-top: 6px;
   margin-bottom: 4px;
 }
 
+
 .time {
   font-size: 11px;
-  opacity: 0.8;
+  opacity: 0.85;
   margin-top: 4px;
-  color: #f1eaea;
+  color: #dde5f1;
   text-align: right;
 }
+
 
 /* --- INPUT AREA --- */
 #send-container {
@@ -181,64 +257,74 @@ margin-top: 6px;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 15px;
-    background: white;
+    padding: 9px;
     display: flex;
-    border: 1px solid #ccc;
-    border-radius: 15px;
     justify-content: center;
-    max-width: 500px;
-    margin-left: 390px;
+    margin-left: 80px;
+    gap: 15px;
 }
 
 #message-input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #c09f36;
     border-radius: 4px;
     max-width: 600px;
-}
-#send-button {
-    margin-left: 10px;
-    padding: 0 15px;
-    border-radius: 315px;
+    background-color: #181712;
     color: white;
-    border: 2px solid #2895ba;
-    background-color:#0d96df;
-}
-#send-button:hover {
-  background-color: #3dbacf;
-  cursor: pointer;
+    font-size: medium;
 }
 
-.header-wrapper {
-    position: sticky;
-    top: 0;
-    background-color:#f9f9f9 ; /* This hides the messages as they scroll up */
+#message-input:focus {
+    outline: 1px solid gold;
+}
+
+#send-btn {
+    width: 47px;
+    height: 44px;
+    border-radius: 50%;
     display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    color: #ffc406;
+    border: 2px solid #ffc406;
+    background-color: #5d5740;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* SVG Path Hover Effect */
+#send-btn:hover {
+  background: linear-gradient(135deg, #D4AF37, #F4D03F);
+  color: #000000;
+  transform: scale(1.15);
+  box-shadow: 10px 6px 33px rgba(212, 175, 55, 0.4);
+}
+
+#send-btn:hover svg path {
+    fill: black !important; /* Forces the icon to turn black */
+    transition: fill 0.3s ease;
 }
 
 #leave-room-btn {
-  position: sticky;    /* This makes it stay at the top while scrolling */
-  top: 0;             /* Where it should stick (the very top) */
-  z-index: 100;        /* Keeps it on top of the messages sliding under */
-  background-color: #d53838; 
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #dc2626;
   align-self: flex-end;
   margin-top: 15px;
-  color:white;
+  color:#fee2e2;
   margin-right: 20px;
-  margin-bottom: 20px; /* This gap protects the first message */
+  margin-bottom: 20px;
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
+
 #leave-room-btn:hover {
-  background-color: #e76161;
+  background-color: #ef4444;
 }

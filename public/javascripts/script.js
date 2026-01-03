@@ -36,7 +36,7 @@ createRoomBtn.addEventListener("click", () => {
     const roomName = roomInput.value.trim();
     const ttlValue = parseInt(document.getElementById("ttl-input").value);
 
-    if (!roomName ||ttlValue<=0||document.getElementById("ttl-input").value=="") return;
+    if (!roomName ||ttlValue<=0||isNaN(ttlValue)) return;
     
     // 1. Tell the server to create the room for EVERYONE
     // This triggers the 'new-room-created' event for all clients
@@ -202,7 +202,7 @@ function appendMessage(data) {
 }
 
 function getColorForUser(name) {
-  const colors = ['#d21884ff','#634a8a', '#c89867ff', '#2d3436', '#008080','#1a3a5f', '#2c5282', '#003366','#3d990d','#e16306', '#71287e', '#9c620aff', '#a80606ff', '#04540aff'];
+  const colors = ['#f687b3', '#634a8a', '#ed8936', '#2d3436', '#008080', '#1a3a5f', '#2c5282', '#003366', '#48bb78', '#fbd38d', '#71287e', '#ecc94b', '#fc8181', '#38b2ac'];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);

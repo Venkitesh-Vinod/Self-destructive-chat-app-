@@ -1,4 +1,4 @@
-# Self-Destructing Encrypted Chat Rooms
+# Self-Destructing Encrypted Chat Room
 
 This project is a real-time chat application built using Node.js, Express, and Socket.IO.
 Chat rooms automatically expire after a fixed time (TTL), and all messages are protected

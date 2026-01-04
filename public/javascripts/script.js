@@ -257,7 +257,7 @@ function renderMessages() {
 }
 
 function getColorForUser(name) {
-  const colors = ['#f687b3', '#634a8a', '#ed8936', '#2d3436', '#008080', '#1a3a5f', '#2c5282', '#003366', '#48bb78', '#fbd38d', '#71287e', '#ecc94b', '#fc8181', '#38b2ac'];
+  const colors = ['#f687b3', '#b17fff', '#ed8936', '#a5c7d1', '#008080', '#d929ff', '#7479f5', '#0cf1ac', '#05a22b', '#fbd38d', '#ff4949', '#f3820a', '#fc8181', '#38b2ac'];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
